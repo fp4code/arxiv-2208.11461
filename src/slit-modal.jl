@@ -23,23 +23,15 @@ implus(z) = imag(z) < 0 ? -z : z
 
 # ╔═╡ 7f4ee055-69aa-4603-a82c-d86e616721eb
 md"""
-Je considère un maillage rectangulaire de t,x,z
-d'intervalles dt,dx,dz avec Nt,Nx,Nz mailles
+I consider a rectangular mesh of t,x,z of intervals dt,dx,dz with Nt,Nx,Nz meshes
 
-L'excitation est monochromatique,
-la longueur d'onde est 1.
+The excitation is monochromatic, the wavelength is 1.
 
+The period is d = 1/2. There are therefore Nx = Nt/2 meshes in one period.
 
-La période vaut d = 1/2. Il y a donc
-Nx = Nt/2 mailles sur une période.
+The slit width ws is d/6. Therefore Ns = Nx/6
 
-La largeur de fente ws vaut d/6.
-Donc Ns = Nx/6
-
-Cf. spaghetti appendice E
-Direct computation of ZEFSs
-Problème $(\partial_t^2 - \partial_x^2 - \partial_z^2) f = 0$
-Avec conditions aux limites surfaces de $f$ perpendiculaire aux surfaces conductrices
+Cf. Direct computation of ZEFSs Problem with boundary conditions surfaces perpendicular to the conducting surfaces.
 """
 
 
@@ -392,13 +384,6 @@ Plots.contour(g03.tta, g03.zza[g03.Nzz:-1:1], g03.Mtz[g03.Nzz:-1:1,:],
                   levels=l03,
                   aspect_ratio=:equal)
 
-# ╔═╡ 27334602-8faa-4c95-af9e-b1dd32a3b985
-let
-hs = (0-angle(rss)+pi)/2pi # 0.915
-    levels = [-128,-64,-32,-16,-8,-4,-1,0,1,4,8,16,32,64,128]*2e-6
-    zoom(dt, dz, 0.415,0.43,0.115,0.13, -0.814943 .+ levels)
-end
-
 # ╔═╡ e525fae7-90e1-4d1d-880f-4ed143aed45a
 zoom(g03, 0.415,0.43,0.115,0.13, -0.814943 .+ l03)
 
@@ -410,47 +395,6 @@ end
 
 # ╔═╡ 596d51f5-aaad-4010-a4c1-1a3837a6439e
 Plots.plot(g03.Mtz[(g03.Nzz:-1:1)[435:455],1190])
-
-# ╔═╡ 35c2f3da-635b-432e-bad4-066d1348dfe1
-begin
-	itmin, itmax, izmin, izmax = itizfromtz(g03.dt, g03.dz, 0.415,0.430,0.115,0.13)
-    zz = izmin:izmax
-    tt = itmin:itmax
-    m = g03.Mtz[(g03.Nzz:-1:1)[zz],tt]
-    mimi = minimum(m)
-    mama = maximum(m)
-    mm = 10 .* (m .- mimi) ./(mama .- mimi)
-    c = Contour.contours(zz*1.0,tt*1.0,m, show=true)
-    
-	# Plots.plot([1,2],[3,4], show=true)
-	
-    #for cl in Contour.levels(c)
-    #    lvl = Contour.level(cl) # the z-value of this contour level
-    #    println(lvl)
-    #    for line in Contour.lines(cl)
-    #        xs, ys = Contour.coordinates(line) # coordinates of this line segment
-    #        # pp = Plots.plot!(xs, ys) # pseudo-code; use whatever plotting package you prefer
-    #    end
-    #end
-end
-
-# ╔═╡ bba2466f-362d-4f63-a2d0-c9e196ba0cb5
-	Plots.plot([1,2],[3,4], show=true)
-
-# ╔═╡ 3b52b4da-3e65-4ff0-a07d-012d6dfd3f61
-cc = let
-	itmin, itmax, izmin, izmax = itizfromtz(g03.dt, g03.dz, 0.415,0.430,0.115,0.13)
-    zz = izmin:izmax
-    tt = itmin:itmax
-    m = g03.Mtz[(g03.Nzz:-1:1)[zz],tt]
-    mimi = minimum(m)
-    mama = maximum(m)
-    mm = 10 .* (m .- mimi) ./(mama .- mimi)
-    c = Contour.contours(zz*1.0,tt*1.0,m)
-end
-
-# ╔═╡ 8e6f38b6-903c-4f0b-82a4-fba064571e9f
-Plots.show(cc)
 
 # ╔═╡ Cell order:
 # ╠═3db88667-117f-4485-b477-a6c886ce8c52
@@ -464,7 +408,7 @@ Plots.show(cc)
 # ╠═7be03d13-a754-43d1-9bc8-e1418f180c34
 # ╠═ffe03b6c-bbee-489e-91a0-507766775979
 # ╠═d4263ac0-5bd6-4d5a-ab66-99a35226f586
-# ╠═a00d2be1-16cd-4f25-a6b4-9e87e89bfcf6
+# ╟─a00d2be1-16cd-4f25-a6b4-9e87e89bfcf6
 # ╠═2fd65b92-f674-46ed-a32e-ee1950107704
 # ╠═7d010001-2b4e-4aeb-9e5d-8ac81a161f7e
 # ╠═311c57eb-d00a-480b-80b8-f56d8c6ebbc2
@@ -485,11 +429,6 @@ Plots.show(cc)
 # ╠═a44f7fe9-79d5-47ac-8bff-4d6d8b52b1ef
 # ╠═95527510-059b-48fd-ac85-769d3f106cc5
 # ╠═559d6453-4bdf-46fc-b841-ca5a6443e8b1
-# ╠═27334602-8faa-4c95-af9e-b1dd32a3b985
 # ╠═e525fae7-90e1-4d1d-880f-4ed143aed45a
 # ╠═6cf8584f-8937-45c3-ba04-b6316cceeef7
 # ╠═596d51f5-aaad-4010-a4c1-1a3837a6439e
-# ╠═35c2f3da-635b-432e-bad4-066d1348dfe1
-# ╠═bba2466f-362d-4f63-a2d0-c9e196ba0cb5
-# ╠═3b52b4da-3e65-4ff0-a07d-012d6dfd3f61
-# ╠═8e6f38b6-903c-4f0b-82a4-fba064571e9f
